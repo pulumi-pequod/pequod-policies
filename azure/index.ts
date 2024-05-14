@@ -2,6 +2,7 @@ import * as network from "@pulumi/azure-native/network";
 import * as compute from "@pulumi/azure-native/compute";
 import * as web from "@pulumi/azure-native/web";
 import * as containerservice from "@pulumi/azure-native/containerservice";
+import * as containerinstance from "@pulumi/azure-native/containerinstance";
 
 import { PolicyPack, validateResourceOfType } from "@pulumi/policy";
 import * as pulumi from "@pulumi/pulumi";
@@ -136,6 +137,20 @@ new PolicyPack("azure", {
                     if (skuLevel > 1) {
                         reportViolation("AppService Plan SKU should use level 1 (e.g. B1, S1, P1).");
                     }
+                }
+            }),
+        },
+        /**
+         * Container Service Policies
+         */
+        {
+            name: "container-group-diagnostics-check",
+            description: "Container groups should have diagnostics enabled.",
+            enforcementLevel: "advisory",
+            validateResource: validateResourceOfType(containerinstance.ContainerGroup, (resource, args, reportViolation) => {
+                // If diagnostics are configured, throw a violation.
+                if (!resource.diagnostics) {
+                    reportViolation(`ContainerGroup, ${args.name}, must have diagnostics configured.`);
                 }
             }),
         },
