@@ -104,28 +104,29 @@ new PolicyPack("gcp", {
             },
         },
         {
-            name: "allowed-image-owner",
-            description: "Check machine image is from an approved publisher.",
+            name: "allowed-operating-system",
+            description: "Check machine image is approved OS.",
             enforcementLevel: "advisory",
             configSchema: {
                 properties: {
-                    allowedPublishers: {
+                    allowedOSes: {
                         type: "array",
                         items: { type: "string", },
                         default: [
-                            "ubuntu-os-cloud", // Ubuntu
+                            "ubuntu-2404-noble-arm64-v20240717", // Ubuntu
+                            "ubuntu-2204-jimmy-arm64", // Ubuntu
                         ],
                     },
                 },
             },
             validateResource: validateResourceOfType(gcp.compute.Instance, (it, args, reportViolation) => {
-                const { allowedPublishers } = args.getConfig<{ allowedPublishers: string[] }>();
+                const { allowedOSes } = args.getConfig<{ allowedOSes: string[] }>();
 
                 // Validate the publisher of the image
                 const imageName = it.bootDisk?.initializeParams?.image!;
-                const imagePublisher = imageName.substring(0, imageName.indexOf("/"));
-                if (allowedPublishers.indexOf(imagePublisher) === -1) {
-                    reportViolation(`Publisher [${imagePublisher}] is not one of [${allowedPublishers}].`);
+                const imageOS = imageName
+                if (allowedOSes.indexOf(imageOS) === -1) {
+                    reportViolation(`Operating System [${imageOS}] is not one of [${allowedOSes}].`);
                 }
             }),
         },
