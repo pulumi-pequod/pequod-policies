@@ -1,0 +1,3 @@
+name: policies-policy-gcp-ts-webserver
+runtime: nodejs
+description: Policies for GCP resources
