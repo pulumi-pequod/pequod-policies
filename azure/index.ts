@@ -3,12 +3,25 @@ import * as compute from "@pulumi/azure-native/compute";
 import * as web from "@pulumi/azure-native/web";
 import * as containerservice from "@pulumi/azure-native/containerservice";
 import * as containerinstance from "@pulumi/azure-native/containerinstance";
+import * as storage from "@pulumi/azure-native/storage";
 
 import { PolicyPack, validateResourceOfType } from "@pulumi/policy";
 import * as pulumi from "@pulumi/pulumi";
 
 new PolicyPack("azure", {
     policies: [
+        // Storage account policy that is pretty restrictive so as to likely fire.
+        {
+            name: "storage-account-no-Standard_LRS",
+            description: "Prohibits using Standard_LRS for storage accounts.",
+            enforcementLevel: "advisory",
+            validateResource: validateResourceOfType(storage.StorageAccount, (sa, args, reportViolation) => {
+                if (sa.sku.name === "Standard_LRS") {
+                    reportViolation(
+                        "Azure Storage Account should not use Standard_LRS SKU.");
+                }
+            }),
+        },
         {
             name: "discouraged-public-internet",
             description: "Ingress rules with public internet access are discouraged.",
