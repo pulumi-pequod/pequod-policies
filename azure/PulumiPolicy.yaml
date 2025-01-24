@@ -1,2 +1,2 @@
-description: A minimal Policy Pack for Azure NextGen using TypeScript.
+description: An Azure policy pack that validates various settings and resources.
 runtime: nodejs
