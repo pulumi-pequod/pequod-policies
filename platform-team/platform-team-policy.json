@@ -2,6 +2,7 @@
   "approved-component-required": {
     "approvedComponents": [
       "stackmgmt:index:stacksettings",
+      "pequod:stackmgmt:stacksettings",
       "container-services:index:AppDeploy",
       "container-services:index:AppImage",
       "container-services:index:AppImageDeploy",
