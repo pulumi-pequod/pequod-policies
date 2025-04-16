@@ -11,6 +11,9 @@
       "pequod:stackmgmt:stacksettings",
       "pequod:gke:Cluster",
       "stackmgmt:index:stacksettings"
+    ],
+    "allowedTypes": [
+      "azure-native:resources:ResourceGroup"
     ]
   }
 }

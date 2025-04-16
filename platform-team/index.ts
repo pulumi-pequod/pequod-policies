@@ -12,12 +12,18 @@ new PolicyPack("platform-team", {
                 approvedComponents: {
                     type: "array",
                     default: [ "stackmgmt:index:stacksettings" ]
+                },
+                allowedTypes: {
+                    type: "array",
+                    default: []
                 }
             }
         },
         validateStack: (stack, reportViolation) => {
             // Get list of approved components
             const approvedComponents = stack.getConfig<{approvedComponents: string[]}>().approvedComponents;
+            // Get list of allowed types
+            const allowedTypes = stack.getConfig<{allowedTypes: string[]}>().allowedTypes;
 
             // Get resources in the stack that are not standard Pulumi types
             const ignoreTypeRegExp =  new RegExp("pulumi:providers|pulumi:pulumi:Stack")
@@ -25,6 +31,8 @@ new PolicyPack("platform-team", {
 
             // Whittle down the list of resources by removing any that ARE approved component type
             resourcesToCheck = resourcesToCheck.filter(resource => !approvedComponents.includes(resource.type))
+            // And remove those resources that are in the allowed types list
+            resourcesToCheck = resourcesToCheck.filter(resource => !allowedTypes.includes(resource.type))
 
             // Now find any resources left that are not parented to an approved component. 
             const unapprovedResources = resourcesToCheck.filter((resource) => !approvedComponents.includes(resource?.parent?.type || ""))
