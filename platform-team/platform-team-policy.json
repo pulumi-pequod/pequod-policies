@@ -1,13 +1,19 @@
 {
   "approved-component-required": {
     "approvedComponents": [
-      "stackmgmt:index:stacksettings",
-      "pequod:stackmgmt:stacksettings",
+      "containerapps:index:AppBuildDeploy",
+      "containerapps:index:AppDeploy",
+      "containerapps:index:AppImage",
       "container-services:index:AppDeploy",
       "container-services:index:AppImage",
       "container-services:index:AppImageDeploy",
       "cloudfront-s3-cdk:index:CloudFrontS3",
-      "pequod:gke:Cluster"
+      "pequod:stackmgmt:stacksettings",
+      "pequod:gke:Cluster",
+      "stackmgmt:index:stacksettings"
+    ],
+    "allowedTypes": [
+      "azure-native:resources:ResourceGroup"
     ]
   }
 }
