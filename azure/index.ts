@@ -3,6 +3,7 @@ import * as compute from "@pulumi/azure-native/compute";
 import * as web from "@pulumi/azure-native/web";
 import * as containerservice from "@pulumi/azure-native/containerservice";
 import * as containerinstance from "@pulumi/azure-native/containerinstance";
+import * as operationalinsights from "@pulumi/azure-native/operationalinsights";
 import * as storage from "@pulumi/azure-native/storage";
 
 import { PolicyPack, validateResourceOfType } from "@pulumi/policy";
@@ -167,6 +168,35 @@ new PolicyPack("azure", {
                 }
             }),
         },
+
+        /**
+         * Operational Insights Policies
+         */
+        {
+            name: "operational-insights-sku-check",
+            description: "Limit sku used for operational insights.",
+            enforcementLevel: "advisory",
+            validateResource: validateResourceOfType(operationalinsights.Workspace, (resource, args, reportViolation) => {
+                // Disallow use of certain SKUs.
+                if (resource.sku) {
+                    if (['Premium', 'PerNode'].indexOf(resource.sku.name) > -1) {
+                        reportViolation(`Operational Insights Workspace, "${args.name}" must not use SKU, ${resource.sku.name}.`);
+                    }
+                }
+            }),
+        },
+        {
+            name: "operational-insights-retention-check",
+            description: "Ensure retention period is no more than 30 days to avoid charges.",
+            enforcementLevel: "advisory",
+            validateResource: validateResourceOfType(operationalinsights.Workspace, (resource, args, reportViolation) => {
+                // Disallow use of certain SKUs.
+                if (resource.retentionInDays && resource.retentionInDays > 30) {
+                    reportViolation(`Operational Insights Workspace, "${args.name}" must not have retention set to greater than 30 days.`);
+                }
+            }),
+        },
+
         /**
          * AKS policies
          */
