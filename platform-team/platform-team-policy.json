@@ -1,16 +1,16 @@
 {
-  "approved-component-required": {
+  "sanctioned-resources": {
     "approvedComponents": [
-      "containerapps:index:AppBuildDeploy",
-      "containerapps:index:AppDeploy",
-      "containerapps:index:AppImage",
-      "container-services:index:AppDeploy",
-      "container-services:index:AppImage",
-      "container-services:index:AppImageDeploy",
-      "cloudfront-s3-cdk:index:CloudFrontS3",
-      "pequod:stackmgmt:stacksettings",
-      "pequod:gke:Cluster",
-      "stackmgmt:index:stacksettings"
+      {"type": "containerapps:index:AppBuildDeploy", "version": "0.0.0"},
+      {"type": "containerapps:index:AppDeploy", "version":"0.0.0"},
+      {"type": "containerapps:index:AppImage", "version": "0.0.0"},
+      {"type": "container-services:index:AppDeploy", "version": "0.0.0"},
+      {"type": "container-services:index:AppImage", "version": "0.0.0"},
+      {"type": "container-services:index:AppImageDeploy", "version": "0.0.0"},
+      {"type": "cloudfront-s3-cdk:index:CloudFrontS3", "version": "0.0.0"},
+      {"type": "k8sapp:index:ServiceDeployment", "version": "0.0.0"},
+      {"type": "stackmgmt:index:stacksettings", "version": "0.0.0"},
+      {"type": "pequod:gke:Cluster", "version": "0.0.0"}
     ],
     "allowedTypes": [
       "azure-native:resources:ResourceGroup"
