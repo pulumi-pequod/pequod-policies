@@ -1,6 +1,23 @@
 {
-  "sanctioned-resources": {
-    "approvedComponents": [
+  "check-component-usage": {
+    "approvedComponentTypes": [
+      "containerapps:index:AppBuildDeploy",
+      "containerapps:index:AppDeploy", 
+      "containerapps:index:AppImage", 
+      "container-services:index:AppDeploy", 
+      "container-services:index:AppImage", 
+      "container-services:index:AppImageDeploy", 
+      "cloudfront-s3-cdk:index:CloudFrontS3", 
+      "k8sapp:index:ServiceDeployment",
+      "stackmgmt:index:stacksettings", 
+      "pequod:gke:Cluster"
+    ],
+    "allowedResourceTypes": [
+      "azure-native:resources:ResourceGroup"
+    ]
+  },
+  "check-component-versions": {
+    "allowedComponentVersions": [
       {"type": "containerapps:index:AppBuildDeploy", "version": "0.0.0"},
       {"type": "containerapps:index:AppDeploy", "version":"0.0.0"},
       {"type": "containerapps:index:AppImage", "version": "0.0.0"},
@@ -11,9 +28,6 @@
       {"type": "k8sapp:index:ServiceDeployment", "version": "0.0.0"},
       {"type": "stackmgmt:index:stacksettings", "version": "0.0.0"},
       {"type": "pequod:gke:Cluster", "version": "0.0.0"}
-    ],
-    "allowedTypes": [
-      "azure-native:resources:ResourceGroup"
     ]
   }
 }

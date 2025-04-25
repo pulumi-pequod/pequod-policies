@@ -1,27 +1,20 @@
 import { PolicyPack, validateResourceOfType } from "@pulumi/policy";
 
-interface ComponentInfo {
-    type: string;
-    version: string;
-}
-
 new PolicyPack("platform-team", {
     policies: [
         //// Component usage and allowed resource types check
         {
-            // This policy name is repeated across multiple policies that use the same policy configuration (see platform-team-policy.json).
-            // The descriptions are unique and explain what the given policy does.
-            name: "sanctioned-resources",
+            name: "check-component-usage",
             description: "COMPONENT USAGE CHECK:Verifies if certain resource types are created outside of a component.",
             enforcementLevel: "advisory",
             // Uses policy config. See README for links to docs.
             // See colocated `platform-team-policy.json` for the config file and note how the JSON object is keyed by the policy name. 
             configSchema: {
                 properties: {
-                    approvedComponents: {
+                    approvedComponentTypess: {
                         type: "array",
                     },
-                    allowedTypes: {
+                    allowedResourceTypes: {
                         type: "array",
                     }
                 }
@@ -29,14 +22,11 @@ new PolicyPack("platform-team", {
             validateStack: (stack, reportViolation) => {
                 // Get list of approved components from policy configuration.
                 // This is an array of objects where the key is the component type and the value is the version.
-                const approvedComponentsList = stack.getConfig<{approvedComponents: ComponentInfo[]}>().approvedComponents;
-
-                // Build an array of only the component types from the approvedComponentsList which is an array of objects.
-                const approvedComponents: string[] = approvedComponentsList.map(component=> component.type);
+                const approvedComponents = stack.getConfig<{approvedComponentTypes: string[]}>().approvedComponentTypes;
 
                 // Get list of allowed types
                 // This is an array of resource types that are allowed to be used outside of a component.
-                const allowedTypes = stack.getConfig<{allowedTypes: string[]}>().allowedTypes;
+                const allowedTypes = stack.getConfig<{allowedResourceTypes: string[]}>().allowedResourceTypes;
 
                 // Get resources in the stack that are not "standard" Pulumi types
                 const ignoreTypeRegExp =  new RegExp("pulumi:providers|pulumi:pulumi:Stack")
@@ -64,7 +54,7 @@ new PolicyPack("platform-team", {
 
         // Component version check.
         {
-            name: "sanctioned-resources",
+            name: "check-component-versions",
             description: "COMPONENT VERSION CHECK: Verifies that if a component is used, it is the correct version.",
             enforcementLevel: "advisory",
             // Uses policy config. See README for links to docs.
@@ -72,20 +62,20 @@ new PolicyPack("platform-team", {
             // NOTE: That the versions in the config are all set to cause this policy to fire.
             configSchema: {
                 properties: {
-                    approvedComponents: {
+                    allowedComponentVersions: {
                         type: "array",
                         default: []
                     },
-                    allowedTypes: {
-                        type: "array",
-                        default: []
-                    }
                 }
             },
             validateStack: (stack, reportViolation) => {
+                interface ComponentInfo {
+                    type: string;
+                    version: string;
+                }
                 // Get list of approved components from policy configuration.
                 // This is an array of objects where the key is the component type and the value is the version.
-                const approvedComponentsList = stack.getConfig<{approvedComponents: ComponentInfo[]}>().approvedComponents;
+                const allowedComponentVersions = stack.getConfig<{allowedComponentVersions: ComponentInfo[]}>().allowedComponentVersions;
 
                 // Cycle through the resources and check the type and version of any providers that match the approved components.
                 // First narrow down the list of resources to just the ones that are provider types.
@@ -97,7 +87,7 @@ new PolicyPack("platform-team", {
                     const providerResourceBaseName = resource.type.split(":")[2];
                     const providerResourceVersion = resource.props.version;
                     // Need to see if the component is using the correct version.
-                    const matchingComponent = approvedComponentsList.find(component => component.type.split(":")[0] == providerResourceBaseName);
+                    const matchingComponent = allowedComponentVersions.find(component => component.type.split(":")[0] == providerResourceBaseName);
                     if (matchingComponent && matchingComponent.version != providerResourceVersion) {
                         outofdateComponents.push(matchingComponent.type);
                     }   
