@@ -25,5 +25,5 @@ Go into the Pulumi Cloud UI and udpate policy groups that use the policy pack to
 
 ## Publish the Configuration for the Poliy
 Evaluate and push the policy config file:
-* `pulumi policy validate-config pequod/platform-team 1.1.0 --config ./platform-team-policy.json`
-* `pulumi policy enable pequod/platform-team 1.1.0 --config ./platform-team-policy.json`
+* `pulumi policy validate-config pequod/platform-team 1.3.0 --config ./platform-team-policy.json`
+* `pulumi policy enable pequod/platform-team 1.3.0 --config ./platform-team-policy.json`

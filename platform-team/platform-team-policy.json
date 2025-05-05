@@ -10,7 +10,11 @@
       "cloudfront-s3-cdk:index:CloudFrontS3", 
       "k8sapp:index:ServiceDeployment",
       "stackmgmt:index:stacksettings", 
-      "pequod:gke:Cluster"
+      "pequod:gke:Cluster",
+      "awsx:lb:ApplicationLoadBalancer",
+      "awsx:ecs:FargateService",
+      "awsx:ecs:FargateTaskDefinition",
+      "awsx:ecr:Repository"
     ],
     "allowedResourceTypes": [
       "azure-native:resources:ResourceGroup"
