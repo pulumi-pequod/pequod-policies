@@ -1,5 +1,6 @@
 {
   "check-component-usage": {
+    "enforcementLevel": "advisory",
     "approvedComponentTypes": [
       "containerapps:index:AppBuildDeploy",
       "containerapps:index:AppDeploy", 
@@ -21,6 +22,7 @@
     ]
   },
   "check-component-versions": {
+    "enforcementLevel": "advisory",
     "allowedComponentVersions": [
       {"type": "containerapps:index:AppBuildDeploy", "version": "0.0.0"},
       {"type": "containerapps:index:AppDeploy", "version":"0.0.0"},
