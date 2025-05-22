@@ -10,7 +10,7 @@ def aws_ecr_autoscan(args):
     if args.resource_type == "aws:ecr/repository:Repository":
         had_violation = False
         if "imageScanningConfiguration" in args.props:
-            if args["imageScanningConfiguration"]["scanOnPush"] != True:
+            if args.props["imageScanningConfiguration"]["scanOnPush"] != True:
                 args.props["imageScanningConfiguration"]["scanOnPush"] = True
                 had_violation = True
         else:
@@ -26,7 +26,7 @@ PolicyPack(
     policies=[
         ResourceValidationPolicy(
             name="remediate_ecr_autoscan",
-            description="Ensure ECR has scan-on-push enabled."
+            description="Ensure ECR has scan-on-push enabled.",
             remediate=aws_ecr_autoscan
         ),
     ],
