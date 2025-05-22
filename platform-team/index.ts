@@ -24,7 +24,7 @@ new PolicyPack("platform-team", {
                 // Ignore provider resources and the stack itself.
                 const ignoreTypeRegExp =  new RegExp("pulumi:providers|pulumi:pulumi:Stack")
                 if (ignoreTypeRegExp.test(res.type)) {
-                    log.debug(`Ignoring resource, ${res.name} since it is of type ${res.type}`);
+                    log.debug(`Policy "check-component-usage": Ignoring resource, ${res.name} since it is of type ${res.type}`);
                     return;
                 }
 
@@ -32,7 +32,7 @@ new PolicyPack("platform-team", {
                 // This is an array of objects where the key is the component type and the value is the version.
                 const approvedComponents = res.getConfig<{approvedComponentTypes: string[]}>().approvedComponentTypes;
                 if (!approvedComponents) {
-                    log.error("No approved components found in policy configuration.");
+                    log.error('Policy "check-component-usage": No approved components found in policy configuration.');
                     return;
                 }
 
@@ -40,7 +40,7 @@ new PolicyPack("platform-team", {
                 // This is an array of resource types that are allowed to be used outside of a component.
                 const allowedTypes = res.getConfig<{allowedResourceTypes: string[]}>().allowedResourceTypes;
                 if (!allowedTypes) {
-                    log.error("No allowed types found in policy configuration.");
+                    log.error('Policy "check-component-usage": No allowed types found in policy configuration.');
                     return;
                 }
 
@@ -66,7 +66,7 @@ new PolicyPack("platform-team", {
                         };
                     } 
                 } else {
-                    log.info(`Resource, ${res.name}, of type ${res.type} is not parented to the stack.\nThis is unexpected and should be reported to the platform team.`);
+                    log.info(`Policy "check-component-usage": Resource, ${res.name}, of type ${res.type} is not parented to the stack.\nThis is unexpected and should be investigated further.`);
                 }
             }
         },
