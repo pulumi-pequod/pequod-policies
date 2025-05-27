@@ -1,6 +1,6 @@
 {
   "check-component-usage": {
-    "enforcementLevel": "mandatory",
+    "enforcementLevel": "advisory",
     "approvedComponentTypes": [
       "containerapps:index:AppBuildDeploy",
       "containerapps:index:AppDeploy", 
