@@ -24,11 +24,16 @@ If the policy is updated perform the following steps:
 Go into the Pulumi Cloud UI and udpate policy groups that use the policy pack to use the latest version of the policy pack.
 
 ## Publish the Configuration for the Policy
+
 **DO NOT DO THIS STEP AT THIS TIME**
-Currently working on having the component repos taking care of managing their config so they can push the latest tag and update the policy config that checks for the component version.
-And so the json has to be updated to only manage approved components/resources and not manage the version.
 
+**ONLY DO THIS IF THIS IS THE FIRST TIME SETTING UP THE POLICIES IN AN ORGANIZATION**
 
+This step primes the policy configuration so that the component repo github actions can add the component and version to the check-component-versions config.
+
+If you run the enable step below it will reset the component/version config and you will (currently) need ot manually run the tag github action in all the pequod/component-* repos.
+
+**AGAIN, DON'T DO THIS STEP**
 Evaluate and push the policy config file:
 * `pulumi policy validate-config pequod/platform-team 1.3.0 --config ./platform-team-policy.json`
 * `pulumi policy enable pequod/platform-team 1.3.0 --config ./platform-team-policy.json`
