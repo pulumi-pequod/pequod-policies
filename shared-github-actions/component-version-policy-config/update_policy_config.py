@@ -7,20 +7,31 @@ from policy_config_helpers import get_policy_groups, get_component_version
 def update_policy_config():
     # Get environment variables passed in from the workflow
     api_endpoint = os.environ.get('PULUMI_API_ENDPOINT') or 'https://api.pulumi.com'
+
     auth_token = os.environ.get('PULUMI_ACCESS_TOKEN')  # The access token is set by the OIDC Issuer that is invoked in the github action
     if not auth_token:
         print("Error: PULUMI_ACCESS_TOKEN environment variable is required")
         sys.exit(1)
+
     component_policy_pack_name = os.environ.get('POLICY_PACK')  # The name of the policy pack to update
     if not component_policy_pack_name:
         print("Error: POLICY_PACK environment variable is required")
         sys.exit(1)
+
     component_version = os.environ.get('COMPONENT_VERSION')
     if not component_version:
         print("Error: COMPONENT_VERSION environment variable is required")
         sys.exit(1)
     # tweak component version to match the expected format which means removing the leading 'v'
     component_version = component_version.lstrip('v')
+    #### INCREMENTING THE MINOR VERSION is done so that the policy ALWAYS fires.
+    #### THIS IS DONE SO THE POLICY CAN BE DEMONSTRATED.
+    #### This code would not be used in a non-demo scenario.
+    version_parts = component_version.split('.')
+    if len(version_parts) >= 2:
+        version_parts[1] = str(int(version_parts[1]) + 1)
+        component_version = '.'.join(version_parts)
+    
     org = os.environ.get('PULUMI_ORG') 
     if not org:
         print("Error: PULUMI_ORG environment variable is required")
