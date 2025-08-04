@@ -37,7 +37,6 @@ def update_policy_config():
     print("environment variables:")
     print(f"API_ENDPOINT: {api_endpoint}")
     print(f"ORG: {org}")
-    print(f"POLICY_GROUPS: {policy_groups}")
     print(f"COMPONENT_TYPES: {component_types}")
     print(f"COMPONENT_VERSION: {component_version}")
 
