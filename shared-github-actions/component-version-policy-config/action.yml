@@ -10,7 +10,7 @@ inputs:
   policy_pack:
     description: 'Policy pack name'
     required: true 
-    default: 'platform-team'
+    default: 'approved-component-versions'
   pulumi_api_endpoint:
     description: 'Pulumi API endpoint'
     required: false

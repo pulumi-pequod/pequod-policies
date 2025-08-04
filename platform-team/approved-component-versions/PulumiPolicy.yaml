@@ -1,0 +1,2 @@
+runtime: nodejs
+description: Policy Pack for validating approved component versions.

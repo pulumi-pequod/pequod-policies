@@ -1,27 +1,5 @@
 {
-  "check-component-usage": {
-    "enforcementLevel": "advisory",
-    "approvedComponentTypes": [
-      "containerapps:index:AppBuildDeploy",
-      "containerapps:index:AppDeploy", 
-      "containerapps:index:AppImage", 
-      "container-services:index:AppDeploy", 
-      "container-services:index:AppImage", 
-      "container-services:index:AppImageDeploy", 
-      "cloudfront-s3-cdk:index:CloudFrontS3", 
-      "k8sapp:index:ServiceDeployment",
-      "stackmgmt:index:stacksettings", 
-      "pequod:gke:Cluster",
-      "awsx:lb:ApplicationLoadBalancer",
-      "awsx:ecs:FargateService",
-      "awsx:ecs:FargateTaskDefinition",
-      "awsx:ecr:Repository"
-    ],
-    "allowedResourceTypes": [
-      "azure-native:resources:ResourceGroup"
-    ]
-  },
-  "check-component-versions": {
+  "approved-component-versions": {
     "enforcementLevel": "advisory",
     "allowedComponentVersions": [
       {"type": "containerapps:index:AppBuildDeploy", "version": "0.0.0"},
