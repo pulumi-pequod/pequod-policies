@@ -1,5 +1,5 @@
 {
-  "approved-components-and-resource-types": {
+  "approved-component-versions": {
     "enforcementLevel": "advisory",
     "allowedComponentVersions": [
       {"type": "containerapps:index:AppBuildDeploy", "version": "0.0.0"},
