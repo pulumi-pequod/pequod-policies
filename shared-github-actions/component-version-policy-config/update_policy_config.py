@@ -16,6 +16,11 @@ def update_policy_config():
         print("Error: POLICY_PACK environment variable is required")
         sys.exit(1)
     component_version = os.environ.get('COMPONENT_VERSION')
+    if not component_version:
+        print("Error: COMPONENT_VERSION environment variable is required")
+        sys.exit(1)
+    # tweak component version to match the expected format which means removing the leading 'v'
+    component_version = component_version.lstrip('v')
     org = os.environ.get('PULUMI_ORG') 
     if not org:
         print("Error: PULUMI_ORG environment variable is required")
