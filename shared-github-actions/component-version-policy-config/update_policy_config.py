@@ -8,7 +8,13 @@ def update_policy_config():
     # Get environment variables passed in from the workflow
     api_endpoint = os.environ.get('PULUMI_API_ENDPOINT') or 'https://api.pulumi.com'
     auth_token = os.environ.get('PULUMI_ACCESS_TOKEN')  # The access token is set by the OIDC Issuer that is invoked in the github action
+    if not auth_token:
+        print("Error: PULUMI_ACCESS_TOKEN environment variable is required")
+        sys.exit(1)
     component_policy_pack_name = os.environ.get('POLICY_PACK')  # The name of the policy pack to update
+    if not component_policy_pack_name:
+        print("Error: POLICY_PACK environment variable is required")
+        sys.exit(1)
     component_version = os.environ.get('COMPONENT_VERSION')
     org = os.environ.get('PULUMI_ORG') 
     if not org:
@@ -27,23 +33,6 @@ def update_policy_config():
         print(f"COMPONENT_TYPES value: {component_types_str}")
         sys.exit(1)
 
-
-    # Construct the API URL
-    base_api_url = f"{api_endpoint}/api/orgs/{org}/policygroups"
-    
-    # Set up headers
-    headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    }
-    
-    # Add authentication if token is provided
-    if auth_token:
-        headers['Authorization'] = f'token {auth_token}'
-
-    # Get the list of policy groups that may need to be updated
-    policy_groups = get_policy_groups(base_api_url, headers)
-
     # Print the variables passed in to the script
     print("environment variables:")
     print(f"API_ENDPOINT: {api_endpoint}")
@@ -51,6 +40,19 @@ def update_policy_config():
     print(f"POLICY_GROUPS: {policy_groups}")
     print(f"COMPONENT_TYPES: {component_types}")
     print(f"COMPONENT_VERSION: {component_version}")
+
+    # Construct the API URL
+    base_api_url = f"{api_endpoint}/api/orgs/{org}/policygroups"
+    
+    # Set up headers
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': f'token {auth_token}'
+    }
+    
+    # Get the list of policy groups that may need to be updated
+    policy_groups = get_policy_groups(base_api_url, headers)
 
     # Loop through each policy group
     for policy_group in policy_groups:

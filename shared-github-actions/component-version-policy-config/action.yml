@@ -9,7 +9,7 @@ inputs:
     required: true
   policy_pack:
     description: 'Policy pack name'
-    required: false
+    required: true 
     default: 'platform-team'
   pulumi_api_endpoint:
     description: 'Pulumi API endpoint'
@@ -17,7 +17,7 @@ inputs:
     default: 'https://api.pulumi.com'
   pulumi_org:
     description: 'Pulumi organization'
-    required: false
+    required: true
     default: 'pequod'
   pulumi_access_token:
     description: 'Pulumi access token'
