@@ -18,10 +18,6 @@ def get_policy_groups(base_api_url, headers):
     response.raise_for_status()
     policy_groups = []
     for policy_group in response.json().get("policyGroups", []):
-      ### TEMPORARY: Skip default policy group
-      if policy_group.get("name") == "default-policy-group":
-        continue
-
       if policy_group.get("numEnabledPolicyPacks", 0) > 0:
         # Only include policy groups that have enabled policy packs
         policy_groups.append(policy_group["name"])
