@@ -27,10 +27,14 @@ def update_policy_config():
     #### INCREMENTING THE MINOR VERSION is done so that the policy ALWAYS fires.
     #### THIS IS DONE SO THE POLICY CAN BE DEMONSTRATED.
     #### This code would not be used in a non-demo scenario.
+    print("***************")
+    print("Incrementing the minor version by 1 so that the policy always fires for demonstration purposes.")
+    print(f"Original component version: {component_version}")
     version_parts = component_version.split('.')
     if len(version_parts) >= 2:
         version_parts[1] = str(int(version_parts[1]) + 1)
         component_version = '.'.join(version_parts)
+    print(f"Updated component version: {component_version}")
     
     org = os.environ.get('PULUMI_ORG') 
     if not org:
