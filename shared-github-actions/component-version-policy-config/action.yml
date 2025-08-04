@@ -19,9 +19,6 @@ inputs:
     description: 'Pulumi organization'
     required: true
     default: 'pequod'
-  pulumi_access_token:
-    description: 'Pulumi access token'
-    required: true
 
 runs:
   using: 'composite'
@@ -32,7 +29,7 @@ runs:
         organization: ${{ inputs.pulumi_org }}
         requested-token-type: urn:pulumi:token-type:access_token:organization
         scope: admin
-        
+
     - name: Setup Python
       uses: actions/setup-python@v5
       with:
@@ -50,5 +47,5 @@ runs:
         COMPONENT_TYPES: ${{ inputs.component_types }}
         COMPONENT_VERSION: ${{ inputs.component_version }}
         POLICY_PACK: ${{ inputs.policy_pack }}
-        PULUMI_ACCESS_TOKEN: ${{ inputs.pulumi_access_token }}
+        PULUMI_ACCESS_TOKEN: ${{ env.PULUMI_ACCESS_TOKEN}}
       run: python ${{ github.action_path }}/update_policy_config.py
