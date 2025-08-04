@@ -78,7 +78,7 @@ def update_policy_config():
                 for policy_pack in policy_data['appliedPolicyPacks']:
                     # Look to see if this policy group uses the specified policy pack
                     if 'name' in policy_pack and policy_pack['name'] == component_policy_pack_name:
-                        print(f"{policy_group} uses policy pack: {policy_pack['name']}")
+                        print(f"{policy_group} uses policy pack, {policy_pack['name']}")
 
                         if 'config' in policy_pack and 'check-component-versions' in policy_pack['config']:
                             allowed_versions = policy_pack['config']['check-component-versions']['allowedComponentVersions']
@@ -98,7 +98,7 @@ def update_policy_config():
                                         found_components.add(component_type)
                                         old_version = component['version']
                                         component['version'] = new_version  # Update to new version
-                                        print(f"Updated {component_type} version from {old_version} to {new_version}")
+                                        print(f"Updated component type, {component_type} version from {old_version} to {new_version}")
                                         updated = True
                                     # else:
                                         # print(f"No update needed for {component_type}")
@@ -146,7 +146,7 @@ def update_policy_config():
                         else:
                             print(f"No updates needed")
                 if not updated:
-                    print(f"Policy group doesn't use {component_policy_pack_name}")
+                    print(f"Policy group doesn't use policy_pack, {component_policy_pack_name}")
             else:
                 print("No applied policy packs found")
             
