@@ -100,8 +100,8 @@ def update_policy_config():
                     if 'name' in policy_pack and policy_pack['name'] == component_policy_pack_name:
                         print(f"{policy_group} uses policy pack, {policy_pack['name']}")
 
-                        if 'config' in policy_pack and 'check-component-versions' in policy_pack['config']:
-                            allowed_versions = policy_pack['config']['check-component-versions']['allowedComponentVersions']
+                        if 'config' in policy_pack and 'approved-component-versions' in policy_pack['config']:
+                            allowed_versions = policy_pack['config']['approved-component-versions']['allowedComponentVersions']
 
                             # Keep track of which components we've found and updated
                             found_components = set()
