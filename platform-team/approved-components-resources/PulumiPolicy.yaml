@@ -1,0 +1,2 @@
+runtime: nodejs
+description: Policy Pack for checking approvd components or resource types are used.
