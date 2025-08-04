@@ -12,11 +12,19 @@ new PolicyPack("platform-team", {
             // See colocated `platform-team-policy.json` for the config file and note how the JSON object is keyed by the policy name. 
             configSchema: {
                 properties: {
-                    approvedComponentTypess: {
+                    approvedComponentTypes: {
                         type: "array",
+                        items: {
+                            type: "string",
+                        },
+                        default: []
                     },
                     allowedResourceTypes: {
                         type: "array",
+                        items: {
+                            type: "string",
+                        },
+                        default: []
                     }
                 }
             },
@@ -89,8 +97,20 @@ new PolicyPack("platform-team", {
                 properties: {
                     allowedComponentVersions: {
                         type: "array",
+                        items: {
+                            type: "object",
+                            properties: {
+                                type: {
+                                    type: "string"
+                                },
+                                version: {
+                                    type: "string"
+                                }
+                            },
+                            required: ["type", "version"]
+                        },
                         default: []
-                    },
+                    }
                 }
             },
             validateStack: (stack, reportViolation) => {
@@ -124,7 +144,7 @@ new PolicyPack("platform-team", {
                         `This stack is using out of date versions of the following components:\n${outofdateComponentsString}`
                     );
                 }
-            },
+            }
         }
-    ],
+    ]
 });
