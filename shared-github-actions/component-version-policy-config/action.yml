@@ -1,0 +1,47 @@
+name: 'Update Policy Config'
+description: 'Updates Pulumi policy configurations with component versions'
+inputs:
+  component_types:
+    description: 'JSON array of component types'
+    required: true
+  component_version:
+    description: 'Component version'
+    required: true
+  policy_pack:
+    description: 'Policy pack name'
+    required: false
+    default: 'platform-team'
+  pulumi_api_endpoint:
+    description: 'Pulumi API endpoint'
+    required: false
+    default: 'https://api.pulumi.com'
+  pulumi_org:
+    description: 'Pulumi organization'
+    required: false
+    default: 'pequod'
+  pulumi_access_token:
+    description: 'Pulumi access token'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    
+    - name: Install dependencies
+      shell: bash
+      run: pip install requests
+    
+    - name: Run policy update
+      shell: bash
+      env:
+        PULUMI_API_ENDPOINT: ${{ inputs.pulumi_api_endpoint }}
+        PULUMI_ORG: ${{ inputs.pulumi_org }}
+        COMPONENT_TYPES: ${{ inputs.component_types }}
+        COMPONENT_VERSION: ${{ inputs.component_version }}
+        POLICY_PACK: ${{ inputs.policy_pack }}
+        PULUMI_ACCESS_TOKEN: ${{ inputs.pulumi_access_token }}
+      run: python ${{ github.action_path }}/update_policy_config.py
