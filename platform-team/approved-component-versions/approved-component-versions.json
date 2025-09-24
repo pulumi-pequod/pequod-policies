@@ -10,7 +10,7 @@
       {"type": "container-services:index:AppImageDeploy", "version": "0.0.0"},
       {"type": "cloudfront-s3-cdk:index:CloudFrontS3", "version": "0.0.0"},
       {"type": "k8sapp:index:ServiceDeployment", "version": "0.0.0"},
-      {"type": "stackmgmt:index:stacksettings", "version": "0.0.0"},
+      {"type": "stackmgmt:index:stacksettings", "version": "2.2.4"},
       {"type": "pequod:gke:Cluster", "version": "0.0.0"}
     ]
   }
