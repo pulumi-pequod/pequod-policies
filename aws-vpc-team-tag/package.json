@@ -1,0 +1,19 @@
+{
+    "name": "aws-vpc-team-tag-policy",
+    "version": "1.0.0",
+    "description": "Mandatory policy to enforce team tags on AWS VPC resources",
+    "files": [
+        "index.ts",
+        "package.json",
+        "PulumiPolicy.yaml",
+        "tsconfig.json"
+    ],
+    "dependencies": {
+        "@pulumi/policy": "^1.7.0",
+        "@pulumi/pulumi": "^3.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.0.0",
+        "typescript": "^5.0.0"
+    }
+}
