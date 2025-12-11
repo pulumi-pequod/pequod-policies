@@ -1,0 +1,2 @@
+runtime: nodejs
+description: Mandatory policy to prevent creation of IAM roles with administrator permissions.
