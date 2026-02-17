@@ -1,0 +1,2 @@
+runtime: nodejs
+description: Mandatory policy to enforce team tags on AWS S3 Bucket resources with team-* prefix pattern.
