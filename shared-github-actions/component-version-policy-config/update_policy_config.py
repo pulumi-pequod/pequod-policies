@@ -137,12 +137,15 @@ def update_policy_config():
                                     updated = True
                         
                         if updated:
-                            # Prepare PATCH request body in the required format
+                            # Prepare PATCH request body in the required format.
+                            # Use .get() for optional fields (displayName, versionTag) that
+                            # may be absent in the API response depending on how the policy
+                            # pack was originally configured.
                             patch_body = {
                                 "addPolicyPack": {
                                     "name": policy_pack['name'],
-                                    "displayName": policy_pack['displayName'],
-                                    "versionTag": policy_pack['versionTag'],
+                                    "displayName": policy_pack.get('displayName', ''),
+                                    "versionTag": policy_pack.get('versionTag', ''),
                                     "config": policy_pack['config']
                                 }
                             }
